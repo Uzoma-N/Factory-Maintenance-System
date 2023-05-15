@@ -1,0 +1,444 @@
+@prefix ind:<URN:inds:>.
+@prefix prop:<URN:props:>.
+@prefix classes:<URN:class:>.
+@prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xml:<http://www.w3.org/2001/XMLSchema#integer>.
+
+ind:PreventiveMaintenanceScheduling		a				classes:MProcess;
+								rdfs:label				"Preventive Maintenance Scheduling";												
+								prop:hasSubProcess      ind:CollectionofData, ind:PerformanceDiagnosis, ind:PerformanceAssessment, ind:PerformancePrediction;
+								prop:hasKPI		        ind:Productivity, ind:Utilization, ind:CustomerSatisfaction, ind:InteractionLevelInventory,
+														ind:ProcessCapability;
+								prop:hasInput			ind:RequirementsandCompliance, ind:EngineeringModelandDiagnosisTools, ind:ExpertSystem;
+								prop:hasOutput			ind:ProactiveMaintenanceDecision, ind:CurrentState.
+
+ind:Productivity				a						classes:MKPI;
+								rdfs:label				"Productivity";
+								prop:hasComment			"This helps to determine the performance based on production details.".
+
+ind:Utilization					a						classes:MKPI;
+								rdfs:label				"Utilization";
+								prop:hasComment			"This provides a summary of utilization of genral asset.".
+
+ind:CustomerSatisfaction		a						classes:MKPI;
+								rdfs:label				"Customer Satisfaction";
+								prop:hasComment			"This focuses on the ability of asset to meet customer's demand.". 
+
+ind:InteractionLevelInventory	a						classes:MKPI;
+								rdfs:label				"Interaction Level Inventory";
+								prop:hasComment			"The refers to the relationship in functionality the asset shares with other assets.".
+
+ind:ProcessCapability			a						classes:MKPI;
+								rdfs:label				"Process Capability";
+								prop:hasComment			"Overall capability of the process.".
+
+ind:RequirementsandCompliance	a						classes:InitialInput;
+								rdfs:label				"Requirements and Compliance";
+								prop:hasComment			"Set of rules guiding asset usage.".
+
+ind:EngineeringModelandDiagnosisTools		a						classes:InitialInput;
+								rdfs:label				"Engineering Model and Diagnosis Tools";
+								prop:hasComment			"A collection of monitoring and measuring tools.".
+								
+ind:ExpertSystem				a						classes:InitialInput;
+								rdfs:label				"Expert System";
+								prop:hasComment			"An intelligent system used for analysis and prediction.".
+								
+ind:ProactiveMaintenanceDecision	a					classes:FinalOutput;
+								rdfs:label				"Proactive Maintenance Decision";
+								prop:hasComment			"The desired output.".
+
+ind:CurrentState				a						classes:FinalOutput;
+								rdfs:label				"Asset Current State";
+								prop:haslevels			ind:Critical1, ind:Critical2, ind:Critical3;
+								prop:hasComment			"Current state of the asset.".
+
+ind:Critical1					a						classes:state;
+								prop:isCaused			ind:Interval021, ind:Interval041, ind:Interval051;
+								prop:hasComment			"This state represents the most likelihood of a breakdown.".
+
+ind:Critical2					a						classes:state;
+								prop:isCaused			ind:Interval022, ind:Interval042, ind:Interval052;
+								prop:hasComment			"This state represents an advanced deviation from the asset working optimum state.".
+
+ind:Critical3					a						classes:state;
+								prop:isCaused			ind:Interval023, ind:Interval043, ind:Interval053;
+								prop:hasComment			"This state represents a minimum deviation from the asset working optimum state.".
+
+ind:CollectionofData			a						classes:L1Process;
+								rdfs:label				"Collection of Data";						
+								prop:hasKPI				ind:Speed, ind:Environment, ind:AssetUtilization, ind:CycleTime;
+								prop:hasInput			ind:Sensors, ind:DC_ACConverter, ind:EngineeringModel;
+								prop:hasOutput			ind:RawData.
+								
+ind:Speed						a 						classes:VarKPI;
+								rdfs:label				"Speed";
+								prop:hasComment			"Rated Speed of Asset.";
+								prop:hasInter			ind:Interval01.	
+
+ind:AssetUtilization			a						classes:VarKPI;
+								rdfs:label				"Asset Utilization";
+								prop:hasComment			"This focuses on the utilization of various parts of the assets.";
+								prop:hasInter			ind:Interval03.
+
+ind:Environment					a						classes:NVarKPI;
+								rdfs:label				"Environment";
+								prop:hasComment			"This provides the factors affecting the asset because of the environment.".
+
+ind:CycleTime					a						classes:NNVarKPI;
+								rdfs:label				"Cycle Time";
+								prop:hasComment			"This provides the factors affecting the asset because of the environment.".
+
+ind:Sensors						a						classes:MonitoringInput;
+								rdfs:label				"Sensors";
+								prop:hasComment			"These provide information regarding the current state of operation of asset.".
+
+ind:DC_ACConverter				a						classes:ProcessingInput;
+								rdfs:label				"DC to AC Converters";
+								prop:hasComment			"These inputs convert signals from sensors.".
+								
+ind:EngineeringModel			a 						classes:ModelInput;
+								rdfs:label				"Engineering Model";
+								prop:hasComment			"Describes the model specifics of the Asset.".
+
+ind:RawData						a 						classes:Output_Input;
+								rdfs:label				"Raw Data";
+								prop:hasComment			"A collection of reading and facts about asset.".
+							
+ind:PerformanceDiagnosis		a						classes:L1Process;
+								rdfs:label				"Performance Diagnosis";							
+								prop:hasKPI				ind:FaultDetectedPrior, ind:MeanTimeBetweenFailure, ind:MaintenanceMonitoring;
+								prop:hasInput			ind:RawData;
+								prop:hasOutput			ind:Information.
+
+ind:FaultDetectedPrior			a 						classes:NVarKPI;
+								rdfs:label				"Fault Detected Prior";
+								prop:hasComment			"This gives and updates the fault detected on the asset.".
+
+ind:MeanTimeBetweenFailure		a 						classes:NNVarKPI;
+								rdfs:label				"Mean Time Between Failure";
+								prop:hasComment			"This is the mean time between asset failures.".
+
+ind:MaintenanceMonitoring		a 						classes:NVarKPI;
+								rdfs:label				"Maintenance Monitoring";
+								prop:hasComment			"This keeps track of maintenace practices and schedules of asset.".
+
+ind:Information					a 						classes:Output_Input;
+								rdfs:label				"Information";
+								prop:hasComment			"A collection of processed facts about asset.".
+
+ind:PerformanceAssessment		a						classes:L1Process;
+								rdfs:label				"Performance Assessment";
+								prop:hasKPI				ind:SavingsinLabourCost, ind:WasteRatio, ind:QualityTracking, ind:Efficiency, ind:ComplianceRates;
+								prop:hasSubProcess		ind:DefineBestPractices, ind:IdentifyChallenges, ind:CreatingaBenchmark, 
+														ind:PerformanceArrangementEvaluationMonitoring, ind:ResultofAnalysis;
+								prop:hasInput			ind:Information;
+								prop:hasOutput			ind:Knowledge.
+
+ind:SavingsinLabourCost			a 						classes:NNVarKPI;
+								rdfs:label				"Savings in Labour Cost";
+								prop:hasComment			"Calcilates the percentage savings on the Asset Value.".
+
+ind:WasteRatio					a 						classes:NNVarKPI;
+								rdfs:label				"Waste Ratio";
+								prop:hasComment			"This takes into account the waste ratio of products derived from asset.".
+
+ind:QualityTracking				a						classes:VarKPI;
+								rdfs:label				"Quality Tracking";
+								prop:hasComment			"This is the allowable Quality Value.";
+								prop:hasInter			ind:Interval05;
+								prop:hasFormular		ind:Formular3.
+								
+ind:Formular3					a 						classes:Formular;
+								prop:hasInvar			ind:WasteRatio, ind:dailyProduction;
+								prop:hasOutvar			ind:QualityTracking;
+								prop:usesFile			"QualityTrack.py".
+						
+ind:Efficiency					a						classes:VarKPI;
+								rdfs:label				"Efficiency";
+								prop:hasComment			"This refers to Downtime and Uptime of asset.";
+								prop:hasInter			ind:Interval04;
+								prop:hasFormular		ind:Formular1.
+								
+ind:Formular1					a 						classes:Formular;
+								prop:hasInvar			ind:Speed, ind:dailyProduction;
+								prop:hasOutvar			ind:Efficiency;
+								prop:usesFile			"Efficiency1.py".
+								
+ind:dailyProduction				a 						classes:basicKPI;
+								rdfs:label				"Daily Production".
+
+ind:ComplianceRates				a 						classes:NNVarKPI;
+								rdfs:label				"Compliance Rates";
+								prop:hasComment			"This measures the compliance rules governing asset use.".
+
+ind:Knowledge					a 						classes:Output_Input;
+								rdfs:label				"Knowledge";
+								prop:hasComment			"A detailed and analyzed fact in derived from Information.".
+
+ind:PerformancePrediction		a						classes:L1Process;
+								rdfs:label				"Performance Prediction";
+								prop:hasKPI				ind:PlannedWorktoTotalWorkRatio, ind:IntegrationCapabilities, ind:MaintenanceCostPerUnit, ind:DemandForecasting;
+								prop:hasInput			ind:Knowledge, ind:ExpertSystem;
+								prop:hasOutput			ind:ProactiveMaintenanceDecision, ind:CurrentState, ind:ProductRedesign.
+
+ind:PlannedWorktoTotalWorkRatio		a					classes:NNVarKPI;
+								rdfs:label				"Planned Work to Total Work Ratio";
+								prop:hasComment			"Provides details of the planned work to total work ratio.".
+
+ind:IntegrationCapabilities		a 						classes:NNVarKPI;
+								rdfs:label				"Integration Capabilities";
+								prop:hasComment			"This estimates the probability of integrating the maintenance decision on the asset.".
+
+ind:MaintenanceCostPerUnit		a 						classes:NNVarKPI;
+								rdfs:label				"Maintenance Cost Per Unit";
+								prop:hasComment			"This estimate the cost of maintaining the asset.".
+
+ind:DemandForecasting			a 						classes:NNVarKPI;
+								rdfs:label				"Demand Forecasting";
+								prop:hasComment			"This predicts the demand on production from the asset.".
+
+ind:ProductRedesign				a 						classes:DecisionOutput;
+								rdfs:label				"Product Redesign";
+								prop:hasComment			"This is a decision output for asset redesign where necessary".
+
+ind:DefineBestPractices			a						classes:L2Process;
+								rdfs:label				"Define Best Practices";
+								prop:hasKPI				ind:DecreaseinDefectRate, ind:SavingsinCost, ind:Availability, ind:Uptime;
+								prop:hasInput			ind:Sensors, ind:DataProcessingSoftware, ind:DC_ACConverter;
+								prop:hasOutput			ind:BestPractices.
+
+ind:DecreaseinDefectRate		a 						classes:NNVarKPI;
+								rdfs:label				"Decrease in Defect Rate";
+								prop:hasComment			"This is the effect of practices on defect rate.".
+
+ind:SavingsinCost				a 						classes:NNVarKPI;
+								rdfs:label				"Savings in Cost";
+								prop:hasComment			"This focuses on the total savings by the asset.".
+
+ind:Availability				a 						classes:NNVarKPI;
+								rdfs:label				"Availability";
+								prop:hasComment			"This is the asset readiness and capacity to work.".
+
+ind:Uptime						a 						classes:NNVarKPI;
+								rdfs:label				"Uptime";
+								prop:hasComment			"This is the activity time of the asset.".
+
+ind:DataProcessingSoftware		a 						classes:SoftwareInput;
+								rdfs:label				"Data Processing Software";
+								prop:hasComment			"A software used for data processing.".
+
+ind:BestPractices				a 						classes:Output_Input1;
+								rdfs:label				"Best Practices";
+								prop:hasComment			"A set of Practices that improves asset performance.".
+
+ind:IdentifyChallenges			a						classes:L2Process;
+								rdfs:label				"Identify Challenges";
+								prop:hasKPI				ind:Downtime, ind:ReducedTimetoProductivity, ind:WearRate;
+								prop:hasInput			ind:BestPractices;
+								prop:hasOutput			ind:Challenges.
+
+ind:Downtime					a						classes:NNVarKPI;
+								rdfs:label				"Downtime";
+								prop:hasComment			"This focuses on the time of inactivity because of a breakdown.".
+									
+ind:ReducedTimetoProductivity	a						classes:NNVarKPI;
+								rdfs:label				"Reduced Time to Productivity";
+								prop:hasComment			"This is the effect of downtime on Productivity.".
+								
+ind:WearRate					a						classes:VarKPI;
+								rdfs:label				"Wear Rate";
+								prop:hasComment			"This is the rate at which the asset parts wear.";
+								prop:hasInter			ind:Interval02;
+								prop:hasFormular		ind:Formular4.
+								
+ind:Formular4					a 						classes:Formular;
+								prop:hasInvar			ind:Load, ind:SlidingDistance;
+								prop:hasOutvar			ind:WearRate;
+								prop:usesFile			"WearRate.py".
+
+ind:Load						a 						classes:basicKPI;
+								rdfs:label				"Load";
+								prop:hasComment 		"Load or Weight of Asset".
+								
+ind:SlidingDistance				a 						classes:basicKPI;
+								rdfs:label				"Sliding Distance";
+								prop:hasComment 		"Distance of Impact along surface".
+
+ind:Challenges					a						classes:Output_Input1;
+								rdfs:label				"Challenges";
+								prop:hasComment			"This is the limitations observed in the asset.".
+
+ind:CreateBenchmark				a						classes:L2Process;
+								rdfs:label				"Create Benchmark";
+								prop:hasKPI				ind:SetTarget, ind:OverallAssetEffectiveness, ind:JobProductCosting, ind:ProcessCapability;
+								prop:hasInput			ind:Challenges, ind:BestPractices;
+								prop:hasOutput			ind:Benchmark.
+								
+ind:SetTarget					a						classes:NVarKPI;
+								rdfs:label				"Set Target";
+								prop:hasComment			"This sets limits for values that measure performance.".
+
+ind:OverallAssetEffectiveness	a						classes:NVarKPI;
+								rdfs:label				"Overall Asset Effectiveness";
+								prop:hasComment			"This focuses on the ability of the asset to carry out it's function effectively.".
+
+ind:JobProductCosting			a						classes:NNVarKPI;
+								rdfs:label				"Job Product Costing";
+								prop:hasComment			"This is the financial value of the asset's production.".
+
+ind:Benchmark					a						classes:Output_Input1;
+								rdfs:label				"Benchmark";
+								prop:hasComment			"This is a threshold for limiting values. ".
+
+ind:PerformanceArrangementEvaluationMonitoring		a			classes:L2Process;
+								rdfs:label				"Performance Arrangement Evaluation Monitoring";
+								prop:hasKPI				ind:TaktTime, ind:MeanTimetoRepair, ind:Speed, ind:ChangeoverTime;
+								prop:hasInput			ind:Benchmark, ind:DataProcessingSoftware;
+								prop:hasOutput			ind:AnalyzedData.
+
+ind:TaktTime					a						classes:NNVarKPI;
+								rdfs:label				"Takt Time";
+								prop:hasComment			"The average production time per unit needed to meet customer demand.".
+
+ind:MeanTimetoRepair			a						classes:NNVarKPI;
+								rdfs:label				"Mean Time to Repair";
+								prop:hasComment			"Average time used after a breakdown ".
+
+ind:ChangeoverTime				a						classes:NNVarKPI;
+								rdfs:label				"Changeover Time";
+								prop:hasComment			"This is tha allowable time used to change production SKU for asset.".
+
+ind:AnalyzedData				a						classes:Output_Input1;
+								rdfs:label				"Analyzed Data";
+								prop:hasComment			"This is a set of organized information about specific asset facts.".
+
+ind:ResultofAnalysis			a						classes:L2Process;
+								rdfs:label				"Result of Analysis";
+								prop:hasKPI				ind:UserFriendlyPresentation, ind:Clarity;
+								prop:hasInput			ind:AnalyzedData, ind:CADorGraphicalSoftware;
+								prop:hasOutput			ind:Knowledge.
+					
+ind:UserFriendlyPresentation	a						classes:NVarKPI;
+								rdfs:label				"User Friendly Presentation";
+								prop:hasComment			"The analysis and implementation has to be user friendly.".
+
+ind:Clarity						a						classes:NVarKPI;
+								rdfs:label				"Clarity";
+								prop:hasComment			"The analysis and results should be clear and easy to understand.".
+
+ind:CADorGraphicalSoftware		a						classes:DesignInput;
+								rdfs:label				"CAD or Graphical Software";
+								prop:hasComment			"This software helps to create a pictoral view of the analyzed outcome.".
+
+ind:Layer1						a						classes:Priority1;
+								rdfs:label				"Layer 1";
+								rdfs:comment			"The lowest layer of manufacturing decision".
+					
+ind:Layer2						a						classes:Priority2;
+								rdfs:label				"Layer 2";
+								rdfs:comment			"The medium layer of manufacturing decision".
+					
+ind:Layer3						a						classes:Priority3;
+								rdfs:label				"Layer 3";
+								rdfs:comment			"The Management layer of Manufacturing Decision".						
+																		
+ind:Interval01					a						classes:Interval;
+								prop:hasMin				"30,000";
+								prop:hasMax				"50,000";
+								prop:hasUsage			ind:Speed;
+								prop:hasUnit			"Rotation/hour.".							
+							
+ind:Interval02					a						classes:Interval;
+								prop:hasMax				"2";
+								prop:hasMin				"0.0001";
+								prop:hasUsage			ind:WearRate;
+								prop:hasUnit			"Percentage.".
+
+ind:Interval021					a 						classes:subKPI;
+								prop:hasUsage			ind:WearRate;
+								prop:hasResult			ind:Critical1;
+								prop:hasMin				"4";
+								prop:hasMax				"100".
+
+ind:Interval022					a 						classes:subKPI;
+								prop:hasUsage			ind:WearRate;
+								prop:hasResult			ind:Critical2;
+								prop:hasMin				"2";
+								prop:hasMax				"5".
+
+ind:Interval023					a 						classes:subKPI;
+								prop:hasUsage			ind:WearRate;
+								prop:hasResult			ind:Critical3;
+								prop:hasMin				"1";
+								prop:hasMax				"2".
+
+ind:Interval03					a						classes:Interval;
+								prop:hasMin				"91";
+								prop:hasMax				"100";
+								prop:hasUsage			ind:AssetUtilization;
+								prop:hasUnit			"Percentage.".
+								
+ind:Interval04					a						classes:Interval;
+								prop:hasMin				"91";
+								prop:hasMax				"100";
+								prop:hasUsage			ind:Efficiency;
+								prop:hasUnit			"Percentage.".
+								
+ind:Interval041					a 						classes:subKPI;
+								prop:hasUsage			ind:Efficiency;
+								prop:hasResult			ind:Critical1;
+								prop:hasMin				"1";
+								prop:hasMax				"71".
+								
+ind:Interval042					a 						classes:subKPI;
+								prop:hasUsage			ind:Efficiency;
+								prop:hasResult			ind:Critical2;
+								prop:hasMin				"70";
+								prop:hasMax				"87".
+								
+ind:Interval043					a 						classes:subKPI;
+								prop:hasUsage			ind:Efficiency;
+								prop:hasResult			ind:Critical3;
+								prop:hasMin				"86";
+								prop:hasMax				"94".
+								
+ind:Interval05					a						classes:Interval;
+								prop:hasMin				"95";
+								prop:hasMax				"100";
+								prop:hasUsage			ind:QualityTracking;
+								prop:hasUnit			"Percentage.".
+								
+ind:Interval051					a 						classes:subKPI;
+								prop:hasUsage			ind:QualityTracking;
+								prop:hasResult			ind:Critical1;
+								prop:hasMin				"1";
+								prop:hasMax				"84".
+								
+ind:Interval052					a 						classes:subKPI;
+								prop:hasUsage			ind:QualityTracking;
+								prop:hasResult			ind:Critical2;
+								prop:hasMin				"83";
+								prop:hasMax				"92".
+								
+ind:Interval053					a 						classes:subKPI;
+								prop:hasUsage			ind:QualityTracking;
+								prop:hasResult			ind:Critical3;
+								prop:hasMin				"91";
+								prop:hasMax				"97".
+								
+ind:Interval06					a 						classes:subKPI.
+
+ind:Interval07					a 						classes:NNVarKPI;
+								a 						classes:NVarKPI;
+								prop:hasSubProcess		ind:Random;
+								prop:hasUnit			ind:ranom;
+								prop:hasInvar			ind:Interval07;
+								prop:hasKPI				ind:Interval08.
+								
+ind:Interval08					prop:hasKPI				ind:Interval07;
+								a 						classes:MProcess;
+								a 						classes:L1Process;
+								a 						classes:L2Process.
+								

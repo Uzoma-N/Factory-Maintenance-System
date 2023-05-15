@@ -1,0 +1,78 @@
+@prefix ind:<URN:inds:>.
+@prefix prop:<URN:props:>.
+@prefix classes:<URN:class:>.
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>.
+@prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix owl:<http://www.w3.org/2002/07/owl#> . 
+@prefix xml:<http://www.w3.org/2001/XMLSchema#integer>.
+
+classes:MProcess				a 						owl:Class;
+								rdfs:subClassOf 		classes:Process;
+								owl:oneOf				ind:AdaptiveMaintenanceScheduling.
+classes:MKPI					a						owl:Class.
+classes:InitialInput			a 						owl:Class.
+classes:FinalOutput				a 						owl:Class.
+classes:state					a					 	owl:Class.
+classes:L1Process				a 						owl:Class;
+								rdfs:subClassOf 		classes:Process.
+classes:VarKPI					a 						owl:Class.
+classes:NVarKPI					a 						owl:Class.
+classes:NNVarKPI				a	 					owl:Class.
+classes:MonitoringInput			a 						owl:Class.
+classes:ProcessingInput			a 						owl:Class.
+classes:ModelInput				a 						owl:Class.
+classes:Output_Input			a 						owl:Class.
+classes:Formular				a 						owl:Class.
+classes:basicKPI				a 						owl:Class.
+classes:DecisionOutput			a 						owl:Class.
+classes:L2Process				a 						owl:Class;
+								rdfs:subClassOf 		classes:Process.
+classes:SoftwareInput			a 						owl:Class.
+classes:Output_Input1			a 						owl:Class.
+classes:Priority1				a 						owl:Class;
+								owl:oneOf				ind:Layer1.
+classes:Priority2				a						owl:Class.
+classes:Priority3				a 						owl:Class.
+classes:Interval				a				 		owl:Class.
+classes:subKPI					a 						owl:Class.								
+classes:basicKPI				a 						owl:Class.
+classes:Interval				a 						owl:Class.
+								
+prop:hasSubProcess				a 						owl:ObjectProperty, owl:AsymmetricProperty.
+prop:hasInput					a 						owl:ObjectProperty.
+prop:hasOutput					a 						owl:ObjectProperty.
+prop:hasInter					a 						owl:ObjectProperty.
+prop:hasResult					a 						owl:ObjectProperty.
+prop:hasUsage 					a 						owl:ObjectProperty, owl:IrreflexiveProperty.
+prop:hasInvar					a 						owl:ObjectProperty, owl:IrreflexiveProperty.
+prop:hasOutvar					a 						owl:ObjectProperty, owl:IrreflexiveProperty.
+prop:isCaused					a 						owl:ObjectProperty;
+								a 						owl:AsymmetricProperty.
+prop:hasFormular				a 						owl:ObjectProperty.
+prop:hasKPI						a 						owl:ObjectProperty, owl:IrreflexiveProperty, owl:AsymmetricProperty.					
+prop:hasInter					a 						owl:ObjectProperty;
+								rdfs:domain 			classes:VarKPI;
+								rdfs:range 				classes:Interval.
+
+prop:hasMin						a 						owl:DatatypeProperty.
+prop:hasUnit					a 						owl:DatatypeProperty.
+prop:hasMax						a 						owl:DatatypeProperty.
+prop:usesFile					a 						owl:DatatypeProperty.
+
+classes:NNVarKPI 				owl:disjointWith 		classes:NVarKPI.
+
+ind:DJClass						a 						owl:AllDisjointClasses;
+								owl:members				classes:MProcess, classes:L1Process, classes:L2Process.
+								
+prop:hasSubProcess				owl:propertyDisjointWith 		prop:hasUnit.
+prop:hasOutvar					owl:propertyDisjointWith 		prop:hasResult.
+
+ind:NPA1						a						owl:NegativePropertyAssertion;
+								owl:sourceIndividual 	ind:Critical1;
+								owl:assertionProperty 	prop:isCaused;
+								owl:target			 	ind:Interval023, ind:Interval043, ind:Interval063.
+
+ind:NPA2						a						owl:NegativePropertyAssertion;
+								owl:sourceIndividual 	ind:Interval04;
+								owl:assertionProperty 	prop:hasMin;
+								owl:target		 		xml:0.
